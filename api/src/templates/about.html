@@ -1,0 +1,35 @@
+<!-- <!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>About Flask</title>
+  </head>
+  <body>
+    <h1> About Flask </h1>
+    <p> Flask is a micro web framework written in Python.</p>
+    <p> Applications that use the Flask framework include Pinterest,
+      LinkedIn, and the community web page for Flask itself.</p>
+  </body>
+</html> -->
+
+
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Post{% endblock %}</h1>
+  <h2> About Flask </h2>
+  <p> Flask is a micro web framework written in Python.</p>
+  <p> Applications that use the Flask framework include Pinterest,
+    LinkedIn, and the community web page for Flask itself.</p>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="title">Title</label>
+    <input name="title" id="title" value="{{ request.form['title'] }}" required>
+    <label for="body">Body</label>
+    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}
