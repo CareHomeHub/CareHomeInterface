@@ -1,15 +1,7 @@
-import json
-import logging
-import requests
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
-from typing import List
-from pydantic import BaseModel
-
-data = [
+[
     {
         "loc_id": "1-112787350",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Mosaic Care Group Limited",
         "rating": "Requires improvement",
         "numberOfBeds": 0,
@@ -19,7 +11,7 @@ data = [
     },
     {
         "loc_id": "1-112789029",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Maison Moti Care Home",
         "rating": "Good",
         "numberOfBeds": 15,
@@ -29,7 +21,7 @@ data = [
     },
     {
         "loc_id": "1-112721881",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Rosehill",
         "rating": "Good",
         "numberOfBeds": 6,
@@ -39,7 +31,7 @@ data = [
     },
     {
         "loc_id": "1-1125959537",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Choice East Midlands (Supported Living)",
         "rating": "Good",
         "numberOfBeds": 0,
@@ -49,7 +41,7 @@ data = [
     },
     {
         "loc_id": "1-112620463",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Agape House",
         "rating": "No published rating",
         "numberOfBeds": 20,
@@ -59,7 +51,7 @@ data = [
     },
     {
         "loc_id": "1-112790575",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Abbey Care",
         "rating": "Good",
         "numberOfBeds": 0,
@@ -69,7 +61,7 @@ data = [
     },
     {
         "loc_id": "1-112767279",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "The Elms",
         "rating": "Inadequate",
         "numberOfBeds": 26,
@@ -79,7 +71,7 @@ data = [
     },
     {
         "loc_id": "1-112747080",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Independence Homes Limited - 37 Foxley Lane",
         "rating": "Good",
         "numberOfBeds": 8,
@@ -89,7 +81,7 @@ data = [
     },
     {
         "loc_id": "1-112717753",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Pilton House Trust",
         "rating": "No published rating",
         "numberOfBeds": 27,
@@ -99,7 +91,7 @@ data = [
     },
     {
         "loc_id": "1-112552719",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Springfield Care Home",
         "rating": "Requires improvement",
         "numberOfBeds": 40,
@@ -109,7 +101,7 @@ data = [
     },
     {
         "loc_id": "1-112803167",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Westerley Residential Care Home for the Elderly - Westcliff-on-Sea",
         "rating": "Good",
         "numberOfBeds": 20,
@@ -119,7 +111,7 @@ data = [
     },
     {
         "loc_id": "1-1125975874",
-        "typ": "Primary Dental Care",
+        "type": "Primary Dental Care",
         "name": "Mydentist - Wells Road - Bristol",
         "rating": "Inspected but not rated",
         "numberOfBeds": 0,
@@ -129,7 +121,7 @@ data = [
     },
     {
         "loc_id": "1-112743419",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Abbeyfield Deben Extra Care Society Limited",
         "rating": "Good",
         "numberOfBeds": 24,
@@ -139,7 +131,7 @@ data = [
     },
     {
         "loc_id": "1-112718008",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "St Vincents Care Home",
         "rating": "Requires improvement",
         "numberOfBeds": 25,
@@ -149,7 +141,7 @@ data = [
     },
     {
         "loc_id": "1-1127939767",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Home Instead Senior Care - Peterborough, Oundle & The Deepings",
         "rating": "Good",
         "numberOfBeds": 0,
@@ -159,7 +151,7 @@ data = [
     },
     {
         "loc_id": "1-112721895",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Thorndale",
         "rating": "Good",
         "numberOfBeds": 6,
@@ -169,7 +161,7 @@ data = [
     },
     {
         "loc_id": "1-112553898",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "J B Skillcare Limited",
         "rating": "No published rating",
         "numberOfBeds": 0,
@@ -179,7 +171,7 @@ data = [
     },
     {
         "loc_id": "1-112747096",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Independence Homes Limited - 7 Hall Road",
         "rating": "Good",
         "numberOfBeds": 7,
@@ -189,7 +181,7 @@ data = [
     },
     {
         "loc_id": "1-112620747",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Chelston Park Nursing and Residential Home - Chelston Gardens Dementia Nursing Home",
         "rating": "Outstanding",
         "numberOfBeds": 86,
@@ -199,7 +191,7 @@ data = [
     },
     {
         "loc_id": "1-112600540",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Phoenix Care Services",
         "rating": "No published rating",
         "numberOfBeds": 0,
@@ -209,7 +201,7 @@ data = [
     },
     {
         "loc_id": "1-112767445",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Faith House Residential Home",
         "rating": "Good",
         "numberOfBeds": 10,
@@ -219,7 +211,7 @@ data = [
     },
     {
         "loc_id": "1-112721909",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Ashdale - Sunderland",
         "rating": "Good",
         "numberOfBeds": 4,
@@ -229,7 +221,7 @@ data = [
     },
     {
         "loc_id": "1-112718314",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "The Hollies Care Home",
         "rating": "Good",
         "numberOfBeds": 18,
@@ -239,7 +231,7 @@ data = [
     },
     {
         "loc_id": "1-112803563",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Millfield House Care Home",
         "rating": "No published rating",
         "numberOfBeds": 39,
@@ -249,7 +241,7 @@ data = [
     },
     {
         "loc_id": "1-112749390",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "The Grange",
         "rating": "Good",
         "numberOfBeds": 27,
@@ -259,7 +251,7 @@ data = [
     },
     {
         "loc_id": "1-112744371",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Short Break Care",
         "rating": "Good",
         "numberOfBeds": 7,
@@ -269,7 +261,7 @@ data = [
     },
     {
         "loc_id": "1-112794925",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Maria Helena Care",
         "rating": "No published rating",
         "numberOfBeds": 33,
@@ -279,7 +271,7 @@ data = [
     },
     {
         "loc_id": "1-112803582",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Chase Park Rehabilitation Centre",
         "rating": "No published rating",
         "numberOfBeds": 30,
@@ -289,7 +281,7 @@ data = [
     },
     {
         "loc_id": "1-112810542",
-        "typ": "Independent Healthcare Org",
+        "type": "Independent Healthcare Org",
         "name": "The Surgery",
         "rating": "No published rating",
         "numberOfBeds": 0,
@@ -299,7 +291,7 @@ data = [
     },
     {
         "loc_id": "1-112767819",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Vermont House",
         "rating": "No published rating",
         "numberOfBeds": 12,
@@ -309,7 +301,7 @@ data = [
     },
     {
         "loc_id": "1-112633103",
-        "typ": "Social Care Org",
+        "type": "Social Care Org",
         "name": "Widecombe Nursing Home",
         "rating": "Good",
         "numberOfBeds": 38,
@@ -318,93 +310,3 @@ data = [
         "lng": 51.916895
     }
 ]
-
-
-tags_metadata = [
-    {
-        "name": "locations",
-        "description": "Location the cqc reference to an establishment used in the provision of care.",
-    },
-    {
-        "name": "providers",
-        "description": "providors the cqc reference to an organisation used to provide care.",
-    },
-    {
-        "name": "items",
-        "description": "Manage items. So _fancy_ they have their own docs.",
-        "externalDocs": {
-            "description": "Items external docs",
-            "url": "https://fastapi.tiangolo.com/",
-        },
-    },
-]
-
-
-
-
-class Item(BaseModel):
-    loc_id: str
-    typ: str
-    name: str
-    rating: str
-    numberOfBeds: int
-    postcode: str
-    lat: float
-    lng: float
-
-    class Config:
-        orm_mode = True
-
-
-class Message(BaseModel):
-    message: str
-
-
-# setup loggers
-logging.config.fileConfig('logging.conf', disable_existing_loggers=False)
-
-# get root logger
-logger = logging.getLogger(__name__)  # the __name__ resolve to "main" since we are at the root of the project. 
-                 
-
-
-
-
-
-app = FastAPI(
-    title="CareHomeHub API interface Project",
-    description="This is the primary connection/ Interface to the data layer, with auto docs for the API knowledge share",
-    version="0.0.1",)
-
-
-@app.get("/")
-async def root():
-    logger.info("logging from the root logger")
-    return {"message": "Welcome to CareHomeHubAPI."}
-
-
-@app.get("/location", response_model= List[Item], responses={404: {"model": Message}}, tags=["locations"])
-async def read_loc():
-    logger.info("logging from the /location")
-    return data
-    
-    
-@app.get("/location/{loc_id}", response_model=Item, responses={404: {"model": Message}}, tags=["providers"])
-async def read_item(loc_id: str):
-    logger.info("logging from the /location/{loc_id}")
-    for loc in data:
-        logger.info("reading ID "+loc["loc_id"]+" in the data search logger for "+ loc_id)
-        
-        if loc_id == loc["loc_id"]:
-            return {
-            "loc_id": loc["loc_id"],
-            "typ": loc["typ"],
-            "name": loc["name"],
-            "rating": loc["rating"],
-            "numberOfBeds": loc["numberOfBeds"],
-            "postcode": loc["postcode"],
-            "lat": loc["lat"],
-            "lng": loc["lng"]
-        }
-    return JSONResponse(status_code=404, content={"message": "Location not found"})
-

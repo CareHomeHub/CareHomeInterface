@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from static.py_core import httpmagic as webread
 
 app = Flask(__name__)
 
@@ -16,12 +17,14 @@ def heartbeat():
 
 @app.route('/search')
 def search():
-    return "Hello search"
+    ratings = ['Red', 'Blue', 'Black', 'Orange']
+    return render_template("search/search.html", ratings=ratings)
 
 
 @app.route('/reports')
 def reports():
-    return "Hello reports"
+    info = webread.read_http()
+    return info
 
 
 @app.route('/about')

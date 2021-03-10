@@ -1,0 +1,7 @@
+fastapi
+py2neo
+neo4j
+pytest
+pytest-bdd
+scipy
+
