@@ -1,0 +1,15 @@
+version: '3'
+services:
+  core_api:
+    build: api/.
+    container_name: "chh-core-api-container"
+    ports:
+      - "8000:15400"
+    volumes:
+      - ./api/:/app
+  
+  core_web:
+    build: web_app/.
+    container_name: "chh-core-web-container"
+    ports:
+      - "5000:5000"

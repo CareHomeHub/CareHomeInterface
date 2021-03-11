@@ -1,7 +1,5 @@
 fastapi
-py2neo
-neo4j
+uvicorn
 pytest
-pytest-bdd
-scipy
-
+py2neo
+neo4j-driver

@@ -11,13 +11,15 @@ ENV FLASK_DEBUG True
 RUN mkdir /app
 WORKDIR /app
 
-RUN pip3 install --upgrade cryptography
+RUN pip install --upgrade cryptography
 
 COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
+
+run pip install flask_cors
 
 COPY ./src .
 
 EXPOSE 5000
 
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]

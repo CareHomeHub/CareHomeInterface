@@ -360,12 +360,24 @@ class Message(BaseModel):
     message: str
 
 
-# setup loggers
-logging.config.fileConfig('logging.conf', disable_existing_loggers=False)
 
-# get root logger
-logger = logging.getLogger(__name__)  # the __name__ resolve to "main" since we are at the root of the project. 
-                 
+
+# setup logger
+logger = logging.getLogger('CHH-CORE-API')
+logger.setLevel(logging.DEBUG)
+
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+# create formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# add formatter to ch
+ch.setFormatter(formatter)
+
+# add ch to logger
+logger.addHandler(ch)
 
 
 
