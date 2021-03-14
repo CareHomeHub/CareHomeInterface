@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from static.py_core import httpmagic as webread
 from flask_cors import CORS
 
@@ -9,7 +9,7 @@ CORS(app)
 @app.route('/hello/')
 @app.route('/hello/<name>')
 def hello(name=None):
-    app.logger.info("/hello triggered")
+    app.logger.info(f"/hello triggered with {name}")
     return render_template('hello/hello.html', name=name)
 
 
@@ -32,7 +32,7 @@ def reports():
     info = webread.read_http()
     app.logger.info("webread.read_http() triggered")
     app.logger.info(f"webread.read_http() returned {info[0]}")
-    return info
+    return jsonify(info)
 
 
 @app.route('/about')
@@ -44,4 +44,4 @@ def about():
 @app.route('/app')
 def applic():
     app.logger.info("/applic triggered")
-    return render_template("app/app.html"
+    return render_template("app/app.html")

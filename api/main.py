@@ -1,10 +1,54 @@
 import json
 import logging
 import requests
+import pandas as pd
+from .gdb import executeQry_df1 as eq_df 
+
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from typing import List
 from pydantic import BaseModel
+from py2neo import Graph
+
+graph = Graph("bolt://graph_db:7687")
+
+queryStr = """
+merge (a :CELL { cell_ref:'REF_0001'})
+merge (b :LOC {loc_ref:'REF_L0002'} )
+merge (a)-[:CURRENT_STATE]->(b)  
+RETURN a
+"""
+
+queryStr1 = """
+MATCH (a:CELL)-[:CURRENT_STATE]->()  
+RETURN a.cell_ref
+"""
+
+def executeQry_df(queryStr):
+    dat = graph.run(queryStr).to_data_frame()
+    print(f"dat: \n{dat}\n")
+    return dat
+
+tbl_qry = "UNWIND range(1, 3) AS n RETURN n, n * n as n_sq"
+
+def executeQry_tbl(queryStr):
+    tbl = graph.run(queryStr).to_table()
+    print(f"tbl \n{tbl}\n")
+    return tbl
+
+executeQry_df(queryStr)
+executeQry_df(queryStr1)
+
+executeQry_tbl(tbl_qry)
+
+
+
+
+
+
+
+
+
 
 data = [
     {
@@ -319,7 +363,6 @@ data = [
     }
 ]
 
-
 tags_metadata = [
     {
         "name": "locations",
@@ -339,9 +382,6 @@ tags_metadata = [
     },
 ]
 
-
-
-
 class Item(BaseModel):
     loc_id: str
     typ: str
@@ -358,9 +398,6 @@ class Item(BaseModel):
 
 class Message(BaseModel):
     message: str
-
-
-
 
 # setup logger
 logger = logging.getLogger('CHH-CORE-API')
@@ -420,3 +457,9 @@ async def read_item(loc_id: str):
         }
     return JSONResponse(status_code=404, content={"message": "Location not found"})
 
+
+@app.get("/data", response_model= List[Item], responses={404: {"model": Message}}, tags=["locations"])
+async def read_data():
+    logger.info("logging from the /data")
+    data = gdb.getData()
+    return data
