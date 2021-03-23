@@ -2,9 +2,31 @@ from flask import Flask, render_template, jsonify
 from static.py_core import httpmagic as webread
 from flask_cors import CORS
 
+import logging
+
+# Blueprints
+from blueprints.mapper import mapper_blueprint
+
 app = Flask(__name__)
 CORS(app)
+# setup logger
+logger = logging.getLogger('CHH-CORE-API')
+logger.setLevel(logging.DEBUG)
 
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+# create formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# add formatter to ch
+ch.setFormatter(formatter)
+
+# add ch to logger
+logger.addHandler(ch)
+
+app.register_blueprint(mapper_blueprint)
 
 @app.route('/hello/')
 @app.route('/hello/<name>')
@@ -15,23 +37,23 @@ def hello(name=None):
 
 @app.route('/')
 def heartbeat():
-    app.logger.info("/heartbeat triggered")
+    logger.info("/heartbeat triggered")
     return "service alive"
 
 
 @app.route('/search')
 def search():
-    app.logger.info("/search triggered")
-    ratings = ['Red', 'Blue', 'Black', 'Orange']
-    return render_template("search/search.html", ratings=ratings)
+    logger.info("/search triggered")
+    ratings = request.GET("http://core_api:8000/locations")
+    return render_template("search/search.html", ratings=ratings.json())
 
 
 @app.route('/reports')
 def reports():
-    app.logger.info("/reports triggered")
+    logger.info("/reports triggered")
+    logger.info("webread.read_http() triggered")
     info = webread.read_http()
-    app.logger.info("webread.read_http() triggered")
-    app.logger.info(f"webread.read_http() returned {info[0]}")
+    logger.info(f"webread.read_http() returned {info[0]}")
     return jsonify(info)
 
 
