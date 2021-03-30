@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify
 from static.py_core import httpmagic as webread
 from flask_cors import CORS
+import requests
 
 import logging
 
@@ -44,7 +45,7 @@ def heartbeat():
 @app.route('/search')
 def search():
     logger.info("/search triggered")
-    ratings = request.GET("http://core_api:8000/locations")
+    ratings = requests.get("http://core_api:8000/locations")
     return render_template("search/search.html", ratings=ratings.json())
 
 
@@ -55,7 +56,6 @@ def reports():
     info = webread.read_http()
     logger.info(f"webread.read_http() returned {info[0]}")
     return jsonify(info)
-
 
 @app.route('/about')
 def about():

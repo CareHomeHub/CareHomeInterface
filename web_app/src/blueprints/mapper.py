@@ -5,7 +5,6 @@ from flask import current_app
 
 mapper_blueprint = Blueprint(name='mapper', import_name=__name__, template_folder='templates', url_prefix='/mapper/')
 
-
 @mapper_blueprint.route('add/<message>', methods=['GET'])
 @mapper_blueprint.route('add/', defaults={'message': 'mapper - no add'},methods=['GET'])
 @mapper_blueprint.route('/', defaults={'message': 'mapper'}, methods=['GET'])

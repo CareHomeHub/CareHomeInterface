@@ -37,65 +37,116 @@ Todo:
 
 # import logging
 
-def findByRef(ref="", dataset=[]):
-    """Summary or Description of the Function
+# def findByRef(ref="", dataset=[]):
+#     """Summary or Description of the Function
 
-    Parameters:
-    argument1 (int): Description of arg1
+#     Parameters:
+#     argument1 (int): Description of arg1
 
-    Returns:
-    int:Returning value
+#     Returns:
+#     int:Returning value
 
-   """
+#    """
     
-    if ref=="":
-        # logger.info("No Reference Supplied to findByRef function")
-        return {"result":  "error1"}
-    if (dataset==[]):
-        # logger.info("No Dataset Supplied to findByRef function")
-        return {"result":  "error2"}
+#     if ref=="":
+#         # logger.info("No Reference Supplied to findByRef function")
+#         return {"result":  "error1"}
+#     if (dataset==[]):
+#         # logger.info("No Dataset Supplied to findByRef function")
+#         return {"result":  "error2"}
     
-    if ref in dataset:
-        return {"result":  "IN"}
-    else:
-        return {"result":  "OUT"}
+#     if ref in dataset:
+#         return {"result":  "IN"}
+#     else:
+#         return {"result":  "OUT"}
     
    
-ans = findByRef(4, [1,2,3,4]) 
-print(f"{ans['result']}")
+# ans = findByRef(4, [1,2,3,4]) 
+# print(f"{ans['result']}")
 
-ans = findByRef(5, [1,2,3,4]) 
-print(f"{ans['result']}")
+# ans = findByRef(5, [1,2,3,4]) 
+# print(f"{ans['result']}")
 
 
 with open('mocks/CQC_data.json') as f: 
     cqc_data = json.load(f)
 
+def getGeoData(cqc_data):
+    result = []
+    cnt = 0
+    for element in cqc_data:
+        geo = {}
+        if 'result' in element['postcode']:
+            cnt += 1
+            geo['location'] = element['loc']['locationId']
+            geo["postcode"] = element['postcode']['result']['postcode']
+            geo["outcode"] = element['postcode']['result']['outcode']
+            geo["country"] = element['postcode']['result']['country']
+            geo["nhs_ha"] = element['postcode']['result']['nhs_ha']
+            geo["longitude"] = element['postcode']['result']['longitude']
+            geo["latitude"] = element['postcode']['result']['latitude']
+            geo["eastings"] = element['postcode']['result']['eastings']
+            geo["northings"] = element['postcode']['result']['northings']
+            geo["primary_care_trust"] = element['postcode']['result']['primary_care_trust']
+            geo["parliamentary_constituency"] = element['postcode']['result']['parliamentary_constituency']
+            geo["region"] = element['postcode']['result']['region']
+            geo["lsoa"] = element['postcode']['result']['lsoa']
+            geo["incode"] = element['postcode']['result']['incode']
+            geo["admin_county"] = element['postcode']['result']['admin_county']
+            geo["admin_ward"] = element['postcode']['result']['admin_ward']
+            result.append(geo)
+            
+        else: 
+            cnt += 1
+            geo['location'] = element['loc']['locationId']
+            geo["postcode"] = "NO POSTCODE DETAILS"
+        
+    print(f"RESULT (getGeoData): {result}")
+    return result
+  
 
-def getSpecialisms(cqc_data):
+
+def getRatings(cqc_data):
     cnt = 0
     count = len(cqc_data)
-    print(count)
+    # print(count)
+    result = []
     for element in cqc_data:
         cnt += 1
-        # print(f"cqc_data ratings: {element['loc']}\n")
-        # print(f"cqc_data ratings overall: {element['loc']['currentRatings']['overall']}\n\n\n")
-        # ratings = element['loc']
-        print(f"cnt = {cnt}")
+        doc={}
         if 'currentRatings' in element['loc']:
-            print(f"cqc_data ratings overall: {element['loc']['currentRatings']['overall']}\n\n\n")
+            # print(f"\n\ncurrentRatings: {element['loc']['currentRatings']}")
+            if element['loc']['currentRatings']['overall']['rating'] == "No published rating":
+                doc["reportLinkId"] = "No published report"
+                doc["reportDate"] = "No published report"
+            else:
+                doc["reportLinkId"] = element['loc']['currentRatings']['overall']['reportLinkId']
+                doc["reportDate"] = element['loc']['currentRatings']['overall']['reportDate']
+            doc["loc"] = element['loc']['locationId']
+            doc["overall"] = element['loc']['currentRatings']['overall']['rating']
+            doc["safe"] = element['loc']['currentRatings']['overall']['keyQuestionRatings'][0]['rating']
+            doc["Well-led"] = element['loc']['currentRatings']['overall']['keyQuestionRatings'][1]['rating']
+            doc["Caring"] = element['loc']['currentRatings']['overall']['keyQuestionRatings'][2]['rating']
+            doc["Responsive"] = element['loc']['currentRatings']['overall']['keyQuestionRatings'][3]['rating']
+            doc["Effective"] = element['loc']['currentRatings']['overall']['keyQuestionRatings'][4]['rating']
+            result.append(doc)
         else:
             print(f"currentRatings missing")
-            print(f"cqc_data ratings overall: {element['loc']}")
-    
-    
-    print(f"\n\n\nlast record :\n\n {cqc_data[-1]['loc']}")        
+            # print(f"cqc_data ratings overall: {element['loc']}")
             
+    # print(f"\n\n\nResult (getRatings) :\n\ {result}")  
+    return result      
             
+
             
-            
-getSpecialisms(cqc_data)
+geodata = getGeoData(cqc_data)
+ratingdata = getRatings(cqc_data)
+
+with open("geodata.json", "w") as write_file:
+        json.dump(geodata, write_file)
+        
     
-    
+with open("ratingdata.json", "w") as write_file:
+        json.dump(ratingdata, write_file)
 
 
