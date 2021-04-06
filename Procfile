@@ -1,1 +1,1 @@
-web: uvicorn app.main:app --host=0.0.0.0 --port=${PORT:-5000}
+web: FLASK_APP=web_app/src/web.py python -m flask run --host=0.0.0.0 --port=$PORT
