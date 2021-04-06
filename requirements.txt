@@ -3,3 +3,4 @@ py2neo
 neo4j
 pandas
 flask
+flask_cors
