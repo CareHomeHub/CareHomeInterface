@@ -1,0 +1,69 @@
+version: '3'
+services:
+  graph_db:
+    image: neo4j
+    container_name: "chh-core-graphdb-container"
+    environment:
+      - NEO4J_AUTH=none
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - ./sampleData/db/dbms:/data/dbms
+    healthcheck:
+      test: "exit 0"
+
+  core_api:
+    build: api/.
+    container_name: "chh-core-api-container"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api/:/app
+    depends_on:
+      graph_db:
+        condition: service_healthy
+  
+  core_web:
+    build: web_app/.
+    container_name: "chh-core-web-container"
+    ports:
+      - "5000:5000"
+    depends_on:
+      core_api:
+        condition: service_started
+
+  db:
+    container_name: chh-core-pg-container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+  postgis:
+    container_name: chh-core-postgis-container
+    image: kartoza/postgis:13-3.1
+    volumes:
+      - pg_data
+    environment:
+      # If you need to create multiple database you can add coma separated databases eg gis,data
+      - POSTGRES_DB=gis
+      - POSTGRES_USER=docker
+      - POSTGRES_PASS=docker
+      - ALLOW_IP_RANGE=0.0.0.0/0
+      # Add extensions you need to be enabled by default in the DB. Default are the five specified below
+      - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology,postgis_raster,pgrouting
+    ports:
+      - 25432:5432
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"
+
+volumes:
+  pg_data:

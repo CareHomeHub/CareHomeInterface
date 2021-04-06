@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <header>
+        <div class="topnav">
+            <a class="active" href="/">Home</a>
+            <a href="{{ url_for('maper.about') }}">Home</a>
+            <a href="{{ url_for('blog.bloglist') }}">blog</a>
+            <a href="{{ url_for('maper.about') }}">About</a>
+            <a href="userRegistry"> Register </a>
+            {% if not (1 == 1)%}
+            <div class="login-container">
+                <form method="POST" action="login">
+                    <input type="text" placeholder="Email" name="email">
+                    <input type="password" placeholder="Password" name="password">
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+            {% else %}
+                <a href="userRecipe"> Enter your own recipe </a>
+                <p>Hi, {{ "username" }}</p>
+            <a href="logout" class="btn btn-default" role="button" aria-pressed="true">Logout</a>
+            {% endif %}
+        
+        </div>
+      <div class="container">
+        <h1 class="logo">Ardit's web app</h1>
+        <strong><nav>
+          <ul class="menu">
+            <li><a href="{{ url_for('maper.about') }}">Home</a></li>
+            <li><a href="{{ url_for('maper.about') }}">About</a></li>
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+      <a class="twitter-timeline" data-lang="en" data-width="220" data-theme="light" href="https://twitter.com/spanarchie?ref_src=twsrc%5Etfw">Tweets by TwitterDev</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+  </body>
+</html>

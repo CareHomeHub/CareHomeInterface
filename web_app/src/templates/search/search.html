@@ -1,0 +1,20 @@
+<!doctype html>
+{% block header %}
+  <h1>Find a Location</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+      <label for="postcode">postcode</label>
+      <input name="postcode_st" id="postcode" value="{{ "DT1 1SS" }}">
+      <label for="rating">rating</label>
+      <select name="rating">
+        {% for rate in ratings %}
+            <option value="{{ rate }}">{{ rate }}</option>
+        {% endfor %}
+      </select>
+      <input type="submit" value="Search">
+    </form>
+{% endblock %}
+
+{% extends 'search/line_map.html' %} <<<<<<<< THIS IS THE FOLIUM MAP

@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    container_name: "chh_web_app_container"
+    ports:
+      - "5000:5000"
