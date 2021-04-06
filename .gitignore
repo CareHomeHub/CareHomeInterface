@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# Generated Graph DB from Docker compose.
+sampleData/db/*
