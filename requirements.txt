@@ -2,5 +2,5 @@ fastapi
 uvicorn
 pytest
 py2neo
-neo4j-driver
+neo4j
 pandas
