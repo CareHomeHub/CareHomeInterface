@@ -45,7 +45,7 @@ def heartbeat():
 @app.route('/search')
 def search():
     logger.info("/search triggered")
-    ratings = requests.get("http://core_api:8000/locations")
+    ratings = requests.get("https://carehomehub-platform.herokuapp.com/locations")
     return render_template("search/search.html", ratings=ratings.json())
 
 
