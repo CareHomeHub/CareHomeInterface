@@ -4,3 +4,4 @@ neo4j
 pandas
 flask
 flask_cors
+folium
