@@ -4,3 +4,4 @@ py2neo
 neo4j-driver
 flask-cors
 logzero
+pandas
