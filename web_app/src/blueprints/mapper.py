@@ -71,7 +71,7 @@ def cqc_mapper(loc = ""):
     folium_map = folium.Map(location=start_coords, zoom_start=14)
 
         
-    for row in ratings.itertuples():
+    for row in ratings:
         test1 = folium.Html(f'<b>{row.name}</b></br><p>cqc_id: {row.loc_id} service_type: {row.typ} number_of_beds: {row.numberOfBeds} PostCode: {row.postcode} </p>', script=True)
         popup = folium.Popup(test1)
         folium_map.add_child(folium.Marker(location=[row.lat,  row.lng],
