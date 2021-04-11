@@ -65,6 +65,7 @@ def cqc_mapper(loc = ""):
     locref = (50.7112, -2.4412)
     
     ratings = requests.get("https://carehomehub-platform.herokuapp.com/locations").json()
+    current_app.logger.info("Curr-BluPrnt call carehomehub-platform.herokuapp.com  - with json response : {}".format(ratings))
     
 
     start_coords = (float(locref[0]), float(locref[1]))
@@ -72,7 +73,7 @@ def cqc_mapper(loc = ""):
 
         
     for row in ratings:
-        test1 = folium.Html(f'<b>{row.name}</b></br><p>cqc_id: {row.loc_id} service_type: {row.typ} number_of_beds: {row.numberOfBeds} PostCode: {row.postcode} </p>', script=True)
+        test1 = folium.Html(f'<b>{row["name"]}</b></br><p>cqc_id: {row["loc_id"]} service_type: {row["typ"]} number_of_beds: {row["numberOfBeds"]} PostCode: {row["postcode"]} </p>', script=True)
         popup = folium.Popup(test1)
         folium_map.add_child(folium.Marker(location=[row.lat,  row.lng],
                  popup=popup, icon=folium.Icon(color='green', icon='hand-holding-heart')))
