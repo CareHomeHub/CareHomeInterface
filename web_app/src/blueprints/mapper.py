@@ -75,7 +75,7 @@ def cqc_mapper(loc = ""):
     for row in ratings:
         test1 = folium.Html(f'<b>{row["name"]}</b></br><p>cqc_id: {row["loc_id"]} service_type: {row["typ"]} number_of_beds: {row["numberOfBeds"]} PostCode: {row["postcode"]} </p>', script=True)
         popup = folium.Popup(test1)
-        folium_map.add_child(folium.Marker(location=[row.lat,  row.lng],
+        folium_map.add_child(folium.Marker(location=[row["lat"],  row["lng"]],
                  popup=popup, icon=folium.Icon(color='green', icon='hand-holding-heart')))
     
     return folium_map._repr_html_()
